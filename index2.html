@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlutterFlow Homepage</title>
+    <style>
+        /* Body and general settings */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0D1B2A, #1B263B);
+            min-height: 100vh;
+            overflow-y: auto;
+            color: black;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+        }
+
+        header .brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        header nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            color: white;
+        }
+
+        header nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #FFD700;
+        }
+
+        header nav button {
+            padding: 8px 18px;
+            background: #FFD700;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        header nav button:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            color: black;
+        }
+
+        .main h1 {
+            font-size: 5rem;
+            margin: 0;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95) skewX(-3deg);
+            animation: appear 1s ease forwards;
+            color: white;
+        }
+
+        .main p {
+            font-size: 1.5rem;
+            margin: 20px 0;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95) skewX(-3deg);
+            animation: appear 1s ease 0.3s forwards;
+            color: white;
+        }
+
+        .main button {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            background: #FFD700;
+            color: #000;
+            cursor: pointer;
+            font-weight: bold;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95) skewX(-3deg);
+            animation: appear 1s ease 0.6s forwards;
+        }
+
+        .main button:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* Card Animation */
+        .card {
+            display: block;
+            width: 90vw;
+            height: 70vh;
+            margin: 40px auto;
+            border-radius: 15px;
+            opacity: 0;
+            transform: perspective(600px) rotateX(80deg) scale(0.6);
+            animation: standUp 1s ease-out 0.8s forwards;
+            object-fit: cover;
+        }
+
+        @keyframes standUp {
+            0% {
+                opacity: 0;
+                transform: perspective(600px) rotateX(80deg) scale(0.6);
+            }
+
+            60% {
+                opacity: 1;
+                transform: perspective(600px) rotateX(10deg) scale(1.05);
+            }
+
+            100% {
+                opacity: 1;
+                transform: perspective(600px) rotateX(0deg) scale(1);
+            }
+        }
+
+        .container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0px auto;
+        }
+
+        .front,
+        .back {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: all 1s ease;
+        }
+
+        .front {
+            z-index: 3;
+        }
+
+        .back {
+            z-index: 2;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .back1.animate {
+            left: -20%;
+            opacity: 1;
+            transform: scale(1) translate(-90px);
+        }
+
+        .back2.animate {
+            left: 20%;
+            opacity: 1;
+            transform: scale(1) translate(90px);
+        }
+
+        .logo-section p {
+            text-align: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            margin-top: 50px;
+        }
+
+        .logo-wrapper {
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .logo-container {
+            display: flex;
+            gap: 100px;
+            align-items: center;
+            width: max-content;
+            animation: scrollLogos 23s linear infinite;
+        }
+
+        .logo-container img {
+            height: 80px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        @keyframes scrollLogos {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Feature Sections */
+        .feature-sections {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            padding: 40px;
+            flex-wrap: wrap;
+        }
+
+        .left-section {
+            width: 45%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .left-section img {
+            width: 100%;
+            border-radius: 15px;
+            margin-top: 10px;
+        }
+
+        .right-wrapper {
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .right-section1,
+        .right-section2 {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            height: 50%;
+        }
+
+        .right-section1 img,
+        .right-section2 img {
+            width: 100%;
+            border-radius: 15px;
+            margin-top: 10px;
+        }
+
+        .feature-sections p {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Customize Sections */
+        .customize-sections {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            width: 90%;
+            margin: 40px auto;
+            color: white;
+            flex-wrap: wrap;
+        }
+
+        .custom-box {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 30px;
+            border-radius: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .progress-bar div {
+            height: 100%;
+            width: 0%;
+        }
+
+        /* Image container */
+        .collaborate-section {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            justify-content: center;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+
+        .container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0px auto;
+        }
+
+        .front,
+        .back {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: all 1s ease;
+        }
+
+        .front {
+            z-index: 3;
+        }
+
+        .back {
+            z-index: 2;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .back1.animate {
+            left: -20%;
+            opacity: 1;
+            transform: scale(1) translate(-90px);
+        }
+
+        .back2.animate {
+            left: 20%;
+            opacity: 1;
+            transform: scale(1) translate(90px);
+        }
+
+        @keyframes appear {
+            0% {
+                transform: translateY(20px) scale(0.95) skewX(-3deg);
+                opacity: 0;
+            }
+
+            50% {
+                transform: translateY(0px) scale(1.02) skewX(1deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(0) scale(1) skewX(0deg);
+                opacity: 1;
+            }
+        }
+
+        /* Click Containers Section */
+        .click-container-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            padding: 40px 20px;
+        }
+
+        .click-container {
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: black;
+
+        }
+
+        .click-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .click-container img {
+            width: 100%;
+            height: auto;
+            margin-top: 15px;
+            border-radius: 15px;
+        }
+
+        .click-container p {
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 1000px) {
+            .feature-sections {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .left-section,
+            .right-wrapper {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="brand">FlutterFlow</div>
+        <nav>
+            <a href="#">Product</a>
+            <a href="#">Resources</a>
+            <a href="#">AI</a>
+            <a href="#">Pricing</a>
+            <button>Login</button>
+        </nav>
+    </header>
+
+    <div class="main">
+        <h1>Build Better. Launch Faster.</h1>
+        <p>FlutterFlow helps you build high quality, customized apps quickly</p>
+        <button>Start</button>
+    </div>
+
+    <video src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\hero_video.mp4" class="card" autoplay muted loop></video>
+
+    <div class="logo-section">
+        <p>TRUSTED BY DEVELOPERS AT</p>
+        <div class="logo-wrapper">
+            <div class="logo-container">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\microsoft.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\salesforce.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\wendys.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\google.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\gm.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\ibm.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\microsoft.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\salesforce.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\wendys.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\google.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\gm.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\ibm.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\microsoft.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\salesforce.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\wendys.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\google.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\gm.svg" alt="">
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\ibm.svg" alt="">
+            </div>
+        </div>
+    </div>
+
+    <center>
+        <h2 style="color: white;">RETHINK HOW YOU BUILD</h2>
+        <h1 style="color: white; font-size: 50px;">Build UI & Logic Visually</h1>
+    </center>
+
+    <div class="feature-sections">
+        <div class="left-section">
+            <p>Build faster visually using 200+ pre-designed UI elements</p>
+            <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\leftImg.avif" alt="">
+        </div>
+
+        <div class="right-wrapper">
+            <div class="right-section1">
+                <p>Add logic within your app with our visual Action Flow Editor</p>
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\rightImg1.avif" alt="">
+            </div>
+            <div class="right-section2">
+                <p>Test your app & fix bugs easily with Test Mode</p>
+                <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\rightImg2.avif" alt="">
+            </div>
+        </div>
+    </div>
+
+    <center>
+        <p style="font-size: 45px; color: white;">Customize Everything</p>
+    </center>
+
+    <div class="customize-sections">
+        <div class="custom-box">
+            <p>Tune every aspect of the app through granular control of widget properties and logic.</p>
+            <div class="progress-bar"></div>
+        </div>
+        <div class="custom-box">
+            <p>Build custom actions & widgets to add rich interactions in your app making anything possible to
+                build.
+            </p>
+            <div class="progress-bar"></div>
+        </div>
+        <div class="custom-box">
+            <p>Create your own Design System in FlutterFlow or import themes from Figma to make your app match your
+                brand design.</p>
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+    <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\fullImg.avif" alt=""
+        style="width: 100%; margin-left: 40px;margin-right: 50px; height: 400px;">
+
+    <p style="text-align: center; color: white; font-size: 60px;"><b>Connect your app to data</b><br><b>with a few
+            clicks</b></p>
+
+    <!-- Click Containers Section -->
+    <div class="click-container-wrapper">
+        <div class="click-container">
+            <p style="color: white;">Quickly setup a database using our Firebase & Supabase integrations.</p>
+            <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\Img1.avif" alt="">
+        </div>
+        <div class="click-container">
+            <p style="color: white;">Easily leverage any third-party API or your own RESTful backend.</p>
+            <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\Img2.avif" alt="">
+        </div>
+        <div class="click-container">
+            <p style="color: white;">Built-in integrations for setting up payments, maps & so much more ...</p>
+            <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\Img3.avif" alt="">
+        </div>
+    </div>
+
+
+    <div class="collaborate-section"
+        style="display: flex; align-items: center; gap: 30px; justify-content: center; margin: 50px 0;">
+        <h1 style="color: white; font-size: 60px; margin: 0;">Collaborate</h1>
+        <div class="container">
+            <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\MovingImages\elephant.jpg" class="front" alt="Front Image">
+            <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\MovingImages\parrot.jpg" class="back back1"
+                alt="Back Image 1">
+            <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\MovingImages\tiger.jpg" class="back back2" alt="Back Image 2">
+        </div>
+        <h1 style="color: white; font-size: 60px; margin: 0;">Seamlessly</h1>
+    </div>
+
+    <div class="click-container-wrapper">
+        <div class="click-container">
+            <p style="color: white;">Quickly setup a database using our Firebase & Supabase integrations.</p>
+            <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\Img1.avif" alt="">
+        </div>
+        <div class="click-container">
+            <p style="color: white;">Easily leverage any third-party API or your own RESTful backend.</p>
+            <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\Img2.avif" alt="">
+        </div>
+        <div class="click-container">
+            <p style="color: white;">Built-in integrations for setting up payments, maps & so much more ...</p>
+            <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\Img3.avif" alt="">
+        </div>
+    </div>
+    <img src="C:\Users\ADMIN\Desktop\BookShelfOrg\HomePage\lImg.avif" alt=""
+        style="width: 100%; height: 600px; margin: 40px;">
+    <script>
+        window.addEventListener('load', () => {
+            // Animate video with main text
+            const card = document.querySelector('.card');
+            card.style.animation = 'standUp 1s ease forwards';
+
+            // Animate logos
+            const logos = document.querySelector('.logo-container');
+            logos.style.animation = 'scrollLogos 23s linear infinite';
+
+        });
+
+        // Animate collaborate section on scroll
+        const collaborateSection = document.querySelector('.collaborate-section');
+        const back1 = document.querySelector('.back1');
+        const back2 = document.querySelector('.back2');
+
+        function animateCollaborate() {
+            const rect = collaborateSection.getBoundingClientRect();
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+            if (rect.top <= windowHeight * 0.8) { // trigger when 80% of section is visible
+                back1.classList.add('animate');
+                back2.classList.add('animate');
+                window.removeEventListener('scroll', animateCollaborate);
+            }
+        }
+
+        window.addEventListener('scroll', animateCollaborate);
+        // Sequential and looping progress bars
+        const boxes = document.querySelectorAll('.custom-box');
+
+        function startProgress(index) {
+            const progress = boxes[index].querySelector('.progress-bar');
+            progress.innerHTML = ''; // Clear previous inner div
+
+            const inner = document.createElement('div');
+            inner.style.height = '100%';
+            inner.style.width = '0%';
+            inner.style.background = 'linear-gradient(to right, white, blue)';
+            inner.style.transition = 'width 3s linear';
+            progress.appendChild(inner);
+
+            // Start the animation
+            setTimeout(() => {
+                inner.style.width = '100%';
+            }, 50);
+
+            // After animation completes, start next progress bar in a loop
+            setTimeout(() => {
+                startProgress((index + 1) % boxes.length);
+            }, 3050);
+        }
+
+        startProgress(0); // Start first progress bar
+
+    </script>
+
+</body>
+
+</html>
+</body>
+
+</html>
